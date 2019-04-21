@@ -9,19 +9,31 @@ class App extends Component {
   constructor(props){
 
     super(props);
+
+    this.state = {products:[]};
+
     this.loadData = this.loadData.bind(this);
     this.loadData();
-  
+    this.productList = this.productList.bind(this);
   }
 
   loadData = () =>{
-    http.getProducts().then(products => {
-      console.log(products);
+    var self =this;
+    http.getProducts().then(data => {
+      self.setState({products: data})
     }, err => {
-      console.log(err);
+      
     });
   }
 
+  productList = () => {
+    const list = this.state.products.map((product) => 
+        <div className="col-sm-4" key={product._id}>
+          <Product title={product.title} price={product.price} imgUrl={product.imgUrl} />
+        </div>
+    );
+    return (list);
+  }
   render() {
     return (
       <div className="App">
@@ -31,9 +43,7 @@ class App extends Component {
         </header>
         <div className="container App-main">
             <div className="row">
-            <Product price="5.99" title="cool toy gun" imgURL="https://ae01.alicdn.com/kf/HTB1NkpTaPihSKJjy0Fiq6AuiFXa4/Colorful-Cool-Toy-Gun-With-Soft-Bullets-The-Best-Toys-for-Children-as-the-Gift-Wonderful.jpg_640x640.jpg"/>
-            <Product price="5.99" title="cool toy gun" imgURL="https://ae01.alicdn.com/kf/HTB1NkpTaPihSKJjy0Fiq6AuiFXa4/Colorful-Cool-Toy-Gun-With-Soft-Bullets-The-Best-Toys-for-Children-as-the-Gift-Wonderful.jpg_640x640.jpg"/>
-            <Product price="5.99" title="cool toy gun" imgURL="https://ae01.alicdn.com/kf/HTB1NkpTaPihSKJjy0Fiq6AuiFXa4/Colorful-Cool-Toy-Gun-With-Soft-Bullets-The-Best-Toys-for-Children-as-the-Gift-Wonderful.jpg_640x640.jpg"/>
+              {this.productList()};
             </div>
            
         </div>
