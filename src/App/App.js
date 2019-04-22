@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import HttpService from "../Services/http-service"
 import Product from "../product/product"
+import WishList from "../wishlist/wishlist"
 const http = new HttpService();
 class App extends Component {
 
@@ -34,6 +35,8 @@ class App extends Component {
     );
     return (list);
   }
+
+
   render() {
     return (
       <div className="App">
@@ -41,9 +44,16 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h4>The Swag Shop</h4>
         </header>
-        <div className="container App-main">
+        <div className="container-fluid App-main">
             <div className="row">
-              {this.productList()};
+              <div className="col-sm-8">
+                  <div className="row">
+                    {this.productList()};
+                  </div>
+              </div>
+              <div className="col-sm-4">
+                <WishList />
+              </div>
             </div>
            
         </div>
